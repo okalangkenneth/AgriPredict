@@ -7,7 +7,7 @@ namespace AgriPredict.Training;
 /// Property names become IDataView column names.
 /// The label column must be named "Label" (ML.NET convention for binary classification).
 /// </summary>
-internal sealed class FrostRiskInput
+public sealed class FrostRiskInput
 {
     public float TempMin { get; set; }
     public float TempMax { get; set; }

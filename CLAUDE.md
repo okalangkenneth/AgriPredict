@@ -76,11 +76,29 @@ NEVER:
   - NuGet: `Microsoft.ML 5.0.0`, `Microsoft.ML.FastTree 5.0.0`, `Microsoft.Extensions.Logging.Console`
   - `dotnet build` → 0 errors, 0 warnings ✅
 
+- [x] Phase 3 — Prediction REST API with Swagger, Serilog, FluentValidation (2026-03-31)
+  - `AgriPredict.Api/Models/FrostRiskPrediction.cs` — ML.NET output schema (`PredictedLabel`, `Probability`, `Score`)
+  - `AgriPredict.Api/Models/PredictFrostResponse.cs` — frost endpoint response shape
+  - `AgriPredict.Api/Models/PredictRainfallResponse.cs` — rainfall endpoint response shape + proxy model note
+  - `AgriPredict.Api/Models/LocationDto.cs` — shared location record
+  - `AgriPredict.Api/Services/IModelService.cs` — `IsAvailable` + `PredictFrostRisk()` interface
+  - `AgriPredict.Api/Services/ModelService.cs` — loads model.zip once; thread-safe lock; 503 guard
+  - `AgriPredict.Api/Validators/CoordinateValidator.cs` — FluentValidation lat/lon (-90..90, -180..180)
+  - `AgriPredict.Api/Validators/RainfallRequestValidator.cs` — FluentValidation lat/lon + days (1..7)
+  - `AgriPredict.DataIngestion/OpenMeteo/OpenMeteoForecastResponse.cs` — separate forecast DTOs (wind_speed_10m_max ≠ archive windspeed_10m_max)
+  - `AgriPredict.DataIngestion/OpenMeteo/OpenMeteoClient.cs` — added `FetchForecastAsync()` + `BuildForecastUrl()`
+  - `AgriPredict.Training/FrostRiskInput.cs` — changed `internal` → `public` (needed by ModelService)
+  - `AgriPredict.Api/Program.cs` — full rewrite: Serilog, Swagger (Swashbuckle 10.x / Microsoft.OpenApi 2.x namespace), 6 endpoints, ProblemDetails 400/503
+  - `AgriPredict.Api/appsettings.json` — added `ModelVersion: "1.0.0"`
+  - NuGet: Swashbuckle.AspNetCore 10.1.7, Serilog.AspNetCore 10.0.0, Serilog.Sinks.File 7.0.0, Serilog.Sinks.Console 6.1.1, FluentValidation.AspNetCore 11.3.1, Microsoft.ML 5.0.0
+  - `dotnet build` → 0 errors, 0 warnings ✅
+  - Swagger `/swagger` — all 6 endpoints visible ✅
+  - **Note:** `OpenApiInfo` lives in `Microsoft.OpenApi` namespace in v2.x (not `Microsoft.OpenApi.Models`)
+
 ### 🔨 IN PROGRESS
-- [ ] Phase 3 — Prediction REST API (.NET 8 minimal API + Swagger)
+- [ ] Phase 4 — Docker + docker-compose orchestration
 
 ### ❌ REMAINING
-- [ ] Phase 4 — Docker + docker-compose orchestration
 - [ ] Phase 5 — GitHub Pages demo UI (Leaflet.js map)
 - [ ] Phase 6 — README + architecture diagram + LinkedIn post
 
