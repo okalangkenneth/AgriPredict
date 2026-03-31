@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+**/logs/
+data/weather-history.json
+data/model.zip
+**/.git/
+**/.vs/
+**/node_modules/
+Dockerfile
+docker-compose.yml
+.dockerignore
+**/*.md

@@ -95,11 +95,20 @@ NEVER:
   - Swagger `/swagger` — all 6 endpoints visible ✅
   - **Note:** `OpenApiInfo` lives in `Microsoft.OpenApi` namespace in v2.x (not `Microsoft.OpenApi.Models`)
 
+- [x] Phase 4 — Docker + docker-compose orchestration (2026-03-31)
+  - `Dockerfile` — multi-stage (sdk:8.0 build → aspnet:8.0 runtime); curl install for healthcheck; `mkdir -p /app/data /app/logs`
+  - `docker-compose.yml` — volume mounts `./data:/app/data` + `./logs:/app/logs`; healthcheck `GET /health`; double-underscore env vars for ASP.NET Core config
+  - `.dockerignore` — excludes bin/, obj/, logs/, data/*.json, data/*.zip, .git/, .vs/, node_modules/
+  - `AgriPredict.Api/appsettings.Production.json` — Production overrides for DataPaths + ModelVersion
+  - `docker compose up -d --build agripredict-api` → container running ✅
+  - `curl http://localhost:5080/health` → `{"status":"healthy"}` ✅
+  - Serilog startup logged; `[ModelService] model.zip not found` ERR expected at first start (no data yet) ✅
+  - **Note:** `aspnet:8.0` (Debian Bookworm) ships without curl — must `apt-get install curl` in runtime stage for healthcheck
+
 ### 🔨 IN PROGRESS
-- [ ] Phase 4 — Docker + docker-compose orchestration
+- [ ] Phase 5 — GitHub Pages demo UI (Leaflet.js map)
 
 ### ❌ REMAINING
-- [ ] Phase 5 — GitHub Pages demo UI (Leaflet.js map)
 - [ ] Phase 6 — README + architecture diagram + LinkedIn post
 
 ---

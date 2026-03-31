@@ -1,0 +1,24 @@
+services:
+  agripredict-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agripredict-api
+    ports:
+      - "5080:8080"
+    volumes:
+      - ./data:/app/data    # persists weather-history.json and model.zip across restarts
+      - ./logs:/app/logs    # persists Serilog rolling log files
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      # Double-underscore notation: ASP.NET Core maps DataPaths__X → DataPaths:X in IConfiguration
+      - DataPaths__WeatherHistory=/app/data/weather-history.json
+      - DataPaths__Model=/app/data/model.zip
+      - ModelVersion=1.0.0
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
