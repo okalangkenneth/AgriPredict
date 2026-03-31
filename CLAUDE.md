@@ -105,10 +105,15 @@ NEVER:
   - Serilog startup logged; `[ModelService] model.zip not found` ERR expected at first start (no data yet) ✅
   - **Note:** `aspnet:8.0` (Debian Bookworm) ships without curl — must `apt-get install curl` in runtime stage for healthcheck
 
-### 🔨 IN PROGRESS
-- [ ] Phase 5 — GitHub Pages demo UI (Leaflet.js map)
+- [x] Phase 5 — GitHub Pages demo UI (Leaflet.js map) (2026-03-31)
+  - `docs/index.html` — two-column layout (60% map / 40% panel); local API notice banner; coordinate display; Analyse button; results panel; Uppsala demo button
+  - `docs/style.css` — "field instrument" dark agri theme; CSS variables; mobile responsive (<700px stacked)
+  - `docs/app.js` — Leaflet map; dark tile filter; click-to-place marker; parallel frost+rainfall fetch; error card; Uppsala pre-pin auto-predict
+  - `docs/.nojekyll` — prevents GitHub Pages Jekyll processing
+  - Live demo URL: https://okalangkenneth.github.io/AgriPredict/
+  - **Note:** API not publicly hosted — banner in UI explains docker-compose local setup
 
-### ❌ REMAINING
+### 🔨 IN PROGRESS
 - [ ] Phase 6 — README + architecture diagram + LinkedIn post
 
 ---

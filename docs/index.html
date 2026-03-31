@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgriPredict — Frost Risk Demo</title>
+
+  <!-- IBM Plex fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Map (left column) ──────────────────────────────────────────────── -->
+  <div id="map" role="application" aria-label="Interactive location map"></div>
+
+  <!-- ── Panel (right column) ──────────────────────────────────────────── -->
+  <aside id="panel" aria-label="Prediction panel">
+
+    <!-- Header -->
+    <header class="panel-header">
+      <h1 class="brand">AGRIPREDICT</h1>
+      <p class="brand-sub">Frost Risk &amp; Rainfall Prediction</p>
+      <hr class="divider" />
+    </header>
+
+    <!-- Local API notice banner -->
+    <div class="api-notice" role="note" aria-label="Local API required">
+      <strong>⚠ This demo requires the API running locally.</strong><br />
+      Run: <code>docker-compose up -d</code><br />
+      Then open <code>http://localhost:5080/swagger</code> to seed data.
+    </div>
+
+    <!-- Coordinate display -->
+    <section class="coords-section" aria-live="polite" aria-label="Selected coordinates">
+      <div class="coords-row">
+        <span class="coords-label">LAT</span>
+        <span class="coords-value" id="display-lat">—.——</span>
+      </div>
+      <div class="coords-row">
+        <span class="coords-label">LON</span>
+        <span class="coords-value" id="display-lon">—.——</span>
+      </div>
+    </section>
+
+    <!-- Analyse button -->
+    <button id="btn-analyse" class="btn-analyse" disabled aria-disabled="true">
+      ▶ ANALYSE LOCATION
+    </button>
+
+    <!-- Results panel -->
+    <section class="results" id="results" aria-live="polite" aria-label="Prediction results">
+
+      <!-- Error card (hidden by default) -->
+      <div class="error-card" id="error-card" hidden>
+        <strong>API unavailable</strong> — is the container running?<br />
+        <code>docker-compose up -d</code>
+      </div>
+
+      <!-- Frost risk -->
+      <div class="result-block" id="frost-block" hidden>
+        <p class="result-block-label">FROST RISK · 48H FORECAST</p>
+        <div class="frost-prob" id="frost-prob">—</div>
+        <div class="risk-badge" id="risk-badge">—</div>
+        <p class="forecast-window">48-hour forecast window</p>
+      </div>
+
+      <!-- Rainfall -->
+      <div class="result-block" id="rainfall-block" hidden>
+        <p class="result-block-label">RAINFALL PROBABILITY</p>
+        <div class="rainfall-grid" id="rainfall-grid">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <!-- Metadata -->
+      <div class="meta-row" id="meta-row" hidden>
+        <span id="meta-model"></span>
+        <span id="meta-time"></span>
+      </div>
+
+    </section>
+
+    <!-- Pre-pinned demo location -->
+    <button id="btn-uppsala" class="btn-demo-location">
+      📍 Uppsala, SE (59.86°N, 17.64°E)
+    </button>
+
+    <!-- Footer -->
+    <footer class="panel-footer">
+      <a href="https://github.com/okalangkenneth/AgriPredict" target="_blank" rel="noopener noreferrer">
+        Source on GitHub
+      </a>
+    </footer>
+
+  </aside>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN2GGnU=" crossorigin=""></script>
+  <script src="app.js"></script>
+</body>
+</html>
