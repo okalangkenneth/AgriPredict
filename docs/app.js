@@ -177,30 +177,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Leaflet map centred on Uppsala
   const map = L.map('map', { zoomControl: true }).setView([59.86, 17.64], 5);
 
-  // OSM tile layer with dark CSS filter
-  const tileLayer = L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  // CartoDB Dark Matter — purpose-built dark tile layer, no CSS filter needed
+  L.tileLayer(
+    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
     {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      maxZoom: 18,
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors · © <a href="https://carto.com/">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19,
     }
   ).addTo(map);
-
-  // Apply dark theme filter once the tile container exists
-  tileLayer.on('load', () => {
-    const container = tileLayer.getContainer && tileLayer.getContainer();
-    if (container) {
-      container.style.filter = 'invert(90%) hue-rotate(170deg) brightness(0.85)';
-    }
-  });
-
-  // Fallback: apply filter directly to the map pane
-  requestAnimationFrame(() => {
-    const pane = map.getPane('tilePane');
-    if (pane) {
-      pane.style.filter = 'invert(90%) hue-rotate(170deg) brightness(0.85)';
-    }
-  });
 
   // Map click → place marker + update coords
   map.on('click', (e) => {
