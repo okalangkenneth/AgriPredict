@@ -113,8 +113,9 @@ NEVER:
   - Live demo URL: https://okalangkenneth.github.io/AgriPredict/
   - **Note:** API not publicly hosted — banner in UI explains docker-compose local setup
 
-### 🔨 IN PROGRESS
-- [ ] Phase 6 — README + architecture diagram + LinkedIn post
+- [x] Phase 6 — README + architecture diagram + LinkedIn post (2026-03-31)
+  - `README.md` — 11 sections: badges, overview, Mermaid architecture diagram, tech stack, quick start, API reference, model metrics, production additions, live demo link, license
+  - `LINKEDIN_POST.md` — agriculture-hook post with stack, metrics, production gaps, repo link
 
 ---
 
