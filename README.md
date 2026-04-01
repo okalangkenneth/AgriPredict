@@ -5,13 +5,13 @@
 
 # AgriPredict
 
-> Frost risk and rainfall prediction for precision agriculture — built with .NET 8 and ML.NET.
+> Frost risk and rainfall prediction for precision agriculture, built with .NET 8 and ML.NET.
 
 ---
 
 ## Background
 
-Agriculture taught me that weather isn't background noise — it's the difference between a harvest and a write-off. A late frost arriving unannounced can destroy a season's work: crop damage, missed irrigation windows, harvest schedules that no longer make sense. The people who manage that risk do so with incomplete information and a lot of experience.
+Agriculture taught me that weather isn't background noise, it's the difference between a harvest and a write-off. A late frost arriving unannounced can destroy a season's work: crop damage, missed irrigation windows, harvest schedules that no longer make sense. The people who manage that risk do so with incomplete information and a lot of experience.
 
 AgriPredict is a portfolio project that bridges that domain knowledge with modern machine learning. A ML.NET FastForest binary classifier is trained on five years of Open-Meteo weather archive data (2020–2024) for a given location, then served via a .NET 8 minimal API. Given any latitude/longitude, it answers the question farmers actually ask: **will there be frost in the next 48 hours here?**
 
@@ -54,9 +54,9 @@ graph LR
 | Layer | Technology |
 |---|---|
 | API Framework | .NET 8 Minimal API |
-| Machine Learning | ML.NET 5.0 — FastForest binary classifier |
+| Machine Learning | ML.NET 5.0 FastForest binary classifier |
 | Weather Data | Open-Meteo Archive + Forecast API (free, no key required) |
-| Logging | Serilog — Console + rolling File sinks |
+| Logging | Serilog  Console + rolling File sinks |
 | Validation | FluentValidation |
 | API Docs | Swashbuckle / Swagger UI |
 | Containers | Docker + docker-compose |
