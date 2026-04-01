@@ -97,23 +97,35 @@ public static class FrostRiskTrainer
         logger.LogInformation("[FrostRiskTrainer] Training FastForest model…");
         var model = pipeline.Fit(split.TrainSet);
 
-        // ── Evaluation ───────────────────────────────────────────────────────
-        var predictions = model.Transform(split.TestSet);
-        var metrics = mlContext.BinaryClassification.Evaluate(predictions, labelColumnName: "Label");
-
-        logger.LogInformation(
-            "[FrostRiskTrainer] ── Evaluation on test split ({TestRows} rows) ──",
-            split.TestSet.GetRowCount() ?? 0);
-        logger.LogInformation("[FrostRiskTrainer]   Accuracy : {Accuracy:P2}", metrics.Accuracy);
-        logger.LogInformation("[FrostRiskTrainer]   AUC      : {AUC:F4}",      metrics.AreaUnderRocCurve);
-        logger.LogInformation("[FrostRiskTrainer]   F1       : {F1:F4}",       metrics.F1Score);
-
-        // ── Save model ───────────────────────────────────────────────────────
+        // ── Save model (before evaluation — ensures model.zip is always written) ──
         var outputDir = Path.GetDirectoryName(modelOutputPath);
         if (!string.IsNullOrEmpty(outputDir))
             Directory.CreateDirectory(outputDir);
 
         mlContext.Model.Save(model, data.Schema, modelOutputPath);
         logger.LogInformation("[FrostRiskTrainer] Model saved to {Path}", modelOutputPath);
+
+        // ── Evaluation ───────────────────────────────────────────────────────
+        try
+        {
+            var predictions = model.Transform(split.TestSet);
+            var metrics = mlContext.BinaryClassification.Evaluate(
+                predictions,
+                labelColumnName:          "Label",
+                scoreColumnName:          "Score",
+                probabilityColumnName:    "Probability",
+                predictedLabelColumnName: "PredictedLabel");
+
+            logger.LogInformation(
+                "[FrostRiskTrainer] ── Evaluation on test split ({TestRows} rows) ──",
+                split.TestSet.GetRowCount() ?? 0);
+            logger.LogInformation("[FrostRiskTrainer]   Accuracy : {Accuracy:P2}", metrics.Accuracy);
+            logger.LogInformation("[FrostRiskTrainer]   AUC      : {AUC:F4}",      metrics.AreaUnderRocCurve);
+            logger.LogInformation("[FrostRiskTrainer]   F1       : {F1:F4}",       metrics.F1Score);
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "[FrostRiskTrainer] Evaluation failed — model saved successfully, metrics unavailable");
+        }
     }
 }

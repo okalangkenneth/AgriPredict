@@ -352,7 +352,11 @@ git push origin main
 
 | Date | Mistake | Rule Added |
 |------|---------|------------|
-| | | |
+| 2026-04-01 | ML.NET 5.0 `Evaluate()` fails with default column names — exception prevented model.zip from being written | Always save model BEFORE evaluation; wrap Evaluate in try-catch; pass explicit column names: Score, Probability, PredictedLabel |
+| 2026-04-01 | Leaflet SRI integrity hashes (added by Claude Code) caused load block on GitHub Pages | Remove `integrity` and `crossorigin` attributes from Leaflet script/link tags |
+| 2026-04-01 | OSM tiles + CSS invert filter renders map invisible on dark background | Use CartoDB Dark Matter tiles — purpose-built dark layer, no filter needed |
+| 2026-04-01 | CORS not configured — API blocked requests from localhost:3333 | Add `AddCors(AllowAnyOrigin)` + `app.UseCors()` before endpoints |
+| 2026-04-01 | Python HTTP server started from solution root instead of docs/ | Always `cd docs/` before `python -m http.server` for local full-stack testing |
 
 ---
 

@@ -34,6 +34,13 @@ try
     });
 
     builder.Services.AddProblemDetails();
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(policy =>
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader());
+    });
     builder.Services.AddHttpClient<OpenMeteoClient>();
 
     builder.Services.AddSingleton(sp =>
@@ -53,6 +60,7 @@ try
     app.Services.GetRequiredService<IModelService>();
 
     // ── Swagger ───────────────────────────────────────────────────────────────
+    app.UseCors();
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AgriPredict v1"));
 
