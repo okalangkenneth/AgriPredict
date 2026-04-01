@@ -54,9 +54,9 @@ graph LR
 | Layer | Technology |
 |---|---|
 | API Framework | .NET 8 Minimal API |
-| Machine Learning | ML.NET 5.0 — FastForest binary classifier |
+| Machine Learning | ML.NET 5.0 FastForest binary classifier |
 | Weather Data | Open-Meteo Archive + Forecast API (free, no key required) |
-| Logging | Serilog — Console + rolling File sinks |
+| Logging | Serilog  Console + rolling File sinks |
 | Validation | FluentValidation |
 | API Docs | Swashbuckle / Swagger UI |
 | Containers | Docker + docker-compose |
